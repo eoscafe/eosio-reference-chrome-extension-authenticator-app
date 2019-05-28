@@ -7,12 +7,14 @@ import AddAuthView from './AddAuthView'
 import FloatingInput from 'components/shared/input/FloatingInput'
 import Button from 'components/shared/button/Button'
 import FormLayout from 'components/shared/layout/FormLayout'
+import { randomKey } from 'eosjs-ecc'
 
 describe('AddAuthView', () => {
   let addAuthView: ShallowWrapper
   let onFormInputChange: jest.Mock
   let onAuthAdd: jest.Mock
   let onAuthCancel: jest.Mock
+  const generatedPrivateKey: string = randomKey()
   const addAuthErrors = {
     privateKey: 'private key error',
     nickname: 'nickname error',
@@ -30,6 +32,7 @@ describe('AddAuthView', () => {
         onAuthAdd={onAuthAdd}
         onAuthCancel={onAuthCancel}
         addAuthErrors={addAuthErrors}
+        generatedPrivateKey={generatedPrivateKey}
       />,
     )
   })

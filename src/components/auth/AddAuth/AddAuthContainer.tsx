@@ -2,7 +2,7 @@ import * as React from 'react'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { sha256 } from 'hash.js'
-import { isValidPrivate, privateToPublic } from 'eosjs-ecc'
+import { isValidPrivate, privateToPublic, randomKey } from 'eosjs-ecc'
 
 import AddAuthView from 'components/auth/AddAuth/AddAuthView'
 import { AddAuthFormInputs } from 'components/auth/AddAuth/AddAuthView'
@@ -42,6 +42,11 @@ export class AddAuthContainer extends React.Component<Props, State> {
     },
   }
 
+  public async componentDidMount() {
+    const privateKey = await randomKey()
+    this.setState({ privateKey })
+  }
+
   public render() {
     return (
       <AddAuthView
@@ -49,6 +54,7 @@ export class AddAuthContainer extends React.Component<Props, State> {
         onAuthAdd={this.onAuthAdd}
         onAuthCancel={this.onAuthCancel}
         addAuthErrors={this.state.addAuthErrors}
+        generatedPrivateKey={this.state.privateKey}
       />
     )
   }

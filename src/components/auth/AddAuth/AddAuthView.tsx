@@ -18,6 +18,7 @@ interface Props {
   onAuthAdd: () => void
   onAuthCancel: () => void
   addAuthErrors: AddAuthFormInputs
+  generatedPrivateKey: string
 }
 
 const AddAuthView: React.SFC<Props> = ({
@@ -25,6 +26,7 @@ const AddAuthView: React.SFC<Props> = ({
   onAuthAdd,
   onAuthCancel,
   addAuthErrors,
+  generatedPrivateKey,
 }: Props) => {
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -39,8 +41,8 @@ const AddAuthView: React.SFC<Props> = ({
             <h1 className='add-auth-title'>Add Auth</h1>
             <p className='add-auth-info'>
               Securely store additional Authenticators below by pasting in Private Keys.
-              Importing your Accounts into the EOSIO Reference Chrome Extension
-              Authenticator App will allow you to transact seamlessly.
+              Importing your Accounts into the EOSIO Authenticator Chrome App will allow
+              you to transact seamlessly.
             </p>
           </div>
 
@@ -49,7 +51,7 @@ const AddAuthView: React.SFC<Props> = ({
               placeholder='Private Key'
               error={addAuthErrors.privateKey}
               onInput={(e) => onFormChange({ privateKey: e.currentTarget.value })}
-              inputType='password'
+              value={generatedPrivateKey}
             />
             <FloatingInput
               placeholder='Nickname'

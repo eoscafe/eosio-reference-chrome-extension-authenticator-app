@@ -27,7 +27,7 @@ describe('GeneralSettingsView', () => {
     expect(info).toHaveLength(1)
     expect(info.text()).toBe(
       'Here you\'ll find general settings that can be applied universally across the EOSIO ' +
-      'Reference Chrome Extension Authenticator App.',
+      'Authenticator Chrome App.',
     )
   })
 
