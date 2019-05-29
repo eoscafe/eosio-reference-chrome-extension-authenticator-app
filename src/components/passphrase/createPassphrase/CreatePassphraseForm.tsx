@@ -43,7 +43,15 @@ const CreatePassphraseForm: React.SFC<Props> = ({
               <h1 className='create-passphrase-title'>Create a Passphrase</h1>
               <p className='create-passphrase-body'>
                 In order to ensure you have the best security for your account, we’ll need you to create a passphrase.
-                <em> Please write this down and store it in a safe place!</em>
+              </p>
+              <p className='create-passphrase-body'>
+                <em> Please write down th passphrase you enter and store it in a safe place!</em>
+              </p>
+              <p className='create-passphrase-body'>
+                <em>
+                  Note: This is the BETA release of the extension, use at your own risk.
+                  Uninstalling extension will delete all keys.
+                </em>
               </p>
             </div>
             <div className='create-passphrase-form-items'>

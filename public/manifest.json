@@ -1,10 +1,10 @@
 {
-  "short_name": "EOSIO Authenticator",
-  "name": "EOSIO Authenticator",
+  "short_name": "EOS Authenticator",
+  "name": "EOS Authenticator",
   "version": "0.1.0",
   "manifest_version": 2,
   "browser_action": {
-    "default_title": "EOSIO Authenticator"
+    "default_title": "EOS Authenticator"
   },
   "options_page": "index.html#options",
   "permissions": ["storage", "tabs", "clipboardWrite"],

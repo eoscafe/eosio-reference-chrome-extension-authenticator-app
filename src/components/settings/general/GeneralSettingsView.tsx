@@ -7,7 +7,7 @@ const GeneralSettingsView: React.SFC = () => (
     <h1 className='general-settings-title'>General Settings</h1>
     <p className='general-settings-info'>
       Here you'll find general settings that can be applied universally across the
-      EOSIO Authenticator Chrome App.
+      EOS Authenticator Chrome App.
     </p>
     <hr />
     <UpdatePassphraseContainer />
