@@ -1,13 +1,13 @@
-# EOSIO Reference Chrome Extension Authenticator App
+# EOSIO Reference Chrome Extension Authenticator App <!-- omit in toc -->
 A Chrome extension which demonstrates how users could sign transactions from EOSIO apps using various EOSIO labs tools.
 
 ![EOSIO Labs](https://img.shields.io/badge/EOSIO-Labs-5cb3ff.svg)
 
-## About EOSIO Labs
+## About EOSIO Labs <!-- omit in toc -->
 
 EOSIO Labs repositories are experimental.  Developers in the community are encouraged to use EOSIO Labs repositories as the basis for code and concepts to incorporate into their applications. Community members are also welcome to contribute and further develop these repositories. Since these repositories are not supported by Block.one, we may not provide responses to issue reports, pull requests, updates to functionality, or other requests from the community, and we encourage the community to take responsibility for these.
 
-## Overview
+## Overview <!-- omit in toc -->
 The EOSIO ecosystem is rich with existing wallets providing users the ability to sign transactions on the EOSIO blockchain. However, we have identified some limitations and possible areas for improvement to the overall user experience:
 * Providing support for only Mainnet accounts and transactions.
 * Lack of support for displaying Ricardian Contracts.
@@ -18,6 +18,36 @@ This Reference Implementation serves an example for wallet developers as possibl
 * It provides seamless multi-network support.
 * It securely stores private keys and signs transactions, showing a richly formatted [Ricardian Contract](https://github.com/EOSIO/ricardian-spec), which provide users with a human readable explanation of the action(s) the app is proposing and allows them to accept the contract’s terms.
 * By following the [Manifest Specification](https://github.com/EOSIO/manifest-spec), it shows metadata about apps to end users as they are signing transactions, which provides users with a better sense of trust for the app they are interacting with. It also runs various transaction pre-flight security checks comparing the contents of a transaction request with what apps have declared about themselves.
+
+## Table of Contents <!-- omit in toc -->
+- [Required Tools](#Required-Tools)
+- [Installation](#Installation)
+- [Integrating with Apps](#Integrating-with-Apps)
+- [Getting Started with an Example Web App](#Getting-Started-with-an-Example-Web-App)
+- [Usage](#Usage)
+  - [How to Create a Passphrase](#How-to-Create-a-Passphrase)
+  - [How to Add a Private Key](#How-to-Add-a-Private-Key)
+  - [How to Accept a Selective Disclosure Request](#How-to-Accept-a-Selective-Disclosure-Request)
+  - [How to Sign Transactions](#How-to-Sign-Transactions)
+- [Architecture](#Architecture)
+  - [Data Flow](#Data-Flow)
+  - [Data storage](#Data-storage)
+  - [Storage Listeners](#Storage-Listeners)
+  - [Web Workers](#Web-Workers)
+  - [Manifest Specification](#Manifest-Specification)
+    - [Assert Action](#Assert-Action)
+  - [Security](#Security)
+  - [Insecure Mode](#Insecure-Mode)
+      - [Chrome extension](#Chrome-extension)
+      - [Application](#Application)
+- [Contributing](#Contributing)
+- [License](#License)
+- [Important](#Important)
+
+## Required Tools
+
+* [Yarn](https://yarnpkg.com/lang/en/) with support at `^1.15.2` (latest stable).
+* [Node.js](https://nodejs.org/en/) with support at `^10.15.3` LTS. **NOTICE** This project will not build on the current version of Node.js `12.3.1` due to an error in a sub-dependency of `react-scripts`.
 
 ## Installation
 1. Install dependencies and build the extension.
@@ -31,7 +61,7 @@ yarn build
 ## Integrating with Apps
 The Chrome extension follows the [EOSIO Authentication Transport Protocol Specification](https://github.com/EOSIO/eosio-authentication-transport-protocol-spec). There is some configuration needed in the integrating app, and there are a few different ways to interact with the Chrome extension from an integrating app:
 1. Make sure your app follows the [Manifest Specification v0.7.0](https://github.com/EOSIO/manifest-spec/tree/v0.7.0).
-1. Make sure your application's Ricardian Contracts follow the [Ricardian Specification v0.1.1](https://github.com/EOSIO/ricardian-spec/tree/v0.1.1).
+1. Make sure your application's Ricardian Contracts follow the [Ricardian Specification v0.2.0](https://github.com/EOSIO/ricardian-spec/tree/v0.2.0).
 1. Choose a solution for interacting with the Chrome extension:
    1. (Easiest) Use the [Universal Authenticator Library](https://github.com/EOSIO/universal-authenticator-library).
       - UAL with the [EOSIO Reference Authenticator](https://github.com/EOSIO/ual-eosio-reference-authenticator) will detect if the Chrome extension is installed, and allows for easy integration. Read the documentation on the [Tropical example app](https://github.com/EOSIO/tropical-example-web-app) to learn how to use UAL.
@@ -39,6 +69,11 @@ The Chrome extension follows the [EOSIO Authentication Transport Protocol Specif
       - This class implements the [EOSJS Signature Provider interface](https://github.com/EOSIO/eosjs-signature-provider-interface). The documentation describes how to utilize it directly with EOSJS.
    1. Directly use the [Window Messaging API](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage).
       - The integrating app will need to post requests and listen for responses following the [EOSIO Authentication Transport Protocol Specification's](https://github.com/EOSIO/eosio-authentication-transport-protocol-spec) envelope formats.
+
+## Getting Started with an Example Web App
+If you want to start out by test driving the EOSIO Reference Chrome Extension Authenticator App for yourself, we recommend checking out our [Tropical Example web app](https://github.com/EOSIO/tropical-example-web-app/). Tropical Example is a mock web application for renting properties and provides instructions and a script for setting up a local chain bootstrapped with all of the necessary, compliant contracts for making the experience work.
+
+Specifically, follow the instructions under the [Running Tropical Example](https://github.com/EOSIO/tropical-example-web-app/#running-tropical-example) header. (Of course, we recommend reading the rest of the README there too, which will provide more context around how the pieces work together to provide the user with a secure and positive user experience.)
 
 ## Usage
 * [Create a Passphrase](#how-to-create-a-passphrase)
@@ -75,6 +110,8 @@ The Chrome extension follows the [EOSIO Authentication Transport Protocol Specif
 1. The Chrome extension will open a window with the transaction request, including the Ricardian Contracts of the actions. You can either accept or cancel this request.
 1. If the request is accepted, the Chrome extension will prompt for your passphrase.
 1. If the passphrase is correct, the Chrome extension will generate a signature, which will be returned to the requesting app.
+
+<img src="docs/sign-transaction.gif" alt="sign-transaction" height="500"/>
 
 ## Architecture
 ### Data Flow
@@ -150,6 +187,6 @@ The integrating application must add the [securityExclusions](https://github.com
 
 ## Important
 
-See LICENSE for copyright and license terms.  Block.one makes its contribution on a voluntary basis as a member of the EOSIO community and is not responsible for ensuring the overall performance of the software or any related applications.  We make no representation, warranty, guarantee or undertaking in respect of the software or any related documentation, whether expressed or implied, including but not limited to the warranties or merchantability, fitness for a particular purpose and noninfringement. In no event shall we be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or documentation or the use or other dealings in the software or documentation.  Any test results or performance figures are indicative and will not reflect performance under all conditions.  Any reference to any third party or third-party product, service or other resource is not an endorsement or recommendation by Block.one.  We are not responsible, and disclaim any and all responsibility and liability, for your use of or reliance on any of these resources. Third-party resources may be updated, changed or terminated at any time, so the information here may be out of date or inaccurate.
+See LICENSE for copyright and license terms.  Block.one makes its contribution on a voluntary basis as a member of the EOSIO community and is not responsible for ensuring the overall performance of the software or any related applications.  We make no representation, warranty, guarantee or undertaking in respect of the software or any related documentation, whether expressed or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose and noninfringement. In no event shall we be liable for any claim, damages or other liability, whether in an action of contract, tort or otherwise, arising from, out of or in connection with the software or documentation or the use or other dealings in the software or documentation. Any test results or performance figures are indicative and will not reflect performance under all conditions.  Any reference to any third party or third-party product, service or other resource is not an endorsement or recommendation by Block.one.  We are not responsible, and disclaim any and all responsibility and liability, for your use of or reliance on any of these resources. Third-party resources may be updated, changed or terminated at any time, so the information here may be out of date or inaccurate.  Any person using or offering this software in connection with providing software, goods or services to third parties shall advise such third parties of these license terms, disclaimers and exclusions of liability.  Block.one, EOSIO, EOSIO Labs, EOS, the heptahedron and associated logos are trademarks of Block.one.
 
 Wallets and related components are complex software that require the highest levels of security.  If incorrectly built or used, they may compromise users’ private keys and digital assets. Wallet applications and related components should undergo thorough security evaluations before being used.  Only experienced developers should work with this software.
