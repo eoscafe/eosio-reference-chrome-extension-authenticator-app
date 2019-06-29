@@ -1,5 +1,5 @@
 export const DEFAULT_WINDOW_SIZE = {  // matching the height and width of iPhone 6-8 plus
-  HEIGHT: 675,
+  HEIGHT: 700,
   WIDTH: 350,
 }
 

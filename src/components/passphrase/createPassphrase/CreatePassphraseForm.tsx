@@ -42,10 +42,8 @@ const CreatePassphraseForm: React.SFC<Props> = ({
             <div className='create-passphrase-heading'>
               <h1 className='create-passphrase-title'>Create a Passphrase</h1>
               <p className='create-passphrase-body'>
-                In order to ensure you have the best security for your account, we’ll need you to create a passphrase.
-              </p>
-              <p className='create-passphrase-body'>
-                <em> Please write down th passphrase you enter and store it in a safe place!</em>
+                For security, we’ll need you to create a passphrase.
+                Please write down and store your passphrase in a safe place!
               </p>
               <p className='create-passphrase-body'>
                 <em>

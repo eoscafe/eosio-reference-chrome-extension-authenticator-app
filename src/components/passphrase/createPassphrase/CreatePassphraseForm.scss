@@ -7,7 +7,7 @@
   .create-passphrase-heading {
     display: grid;
     grid-gap: $padding-heading-gap;
-    padding: $padding-top 0;
+    padding: $padding-top 0 10px 0;
 
     em {
       font-weight: bold;
